@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar color="secondary">
+        <ion-title>
+            Gráfica
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card>
+
+        <ion-card-content>
+            <canvas #lineCanvas></canvas>
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-item>
+        <button ion-button
+                (click)="generatePDF()">Generar PDF</button>
+    </ion-item>
+
+</ion-content>
