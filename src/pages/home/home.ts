@@ -172,6 +172,35 @@ export class HomePage {
 	}
 
 	generatePDF() {
+		var obj = [
+			{
+				id: 5,
+				altura: 2,
+				tiempo: 3
+			},
+			{
+				id: 6,
+				altura: 4,
+				tiempo: 3
+			},
+			{
+				id: 7,
+				altura: 5,
+				tiempo: 3
+			}
+		];
+		var titulo = [
+			{ text: 'Altura', style: 'tableHeader' },
+			{ text: 'Tiempo', style: 'tableHeader' }
+		];
+
+		var array = new Array();
+		array.push(titulo);
+
+		for (let i = 0; i < obj.length; i++) {
+			array.push([ obj[i]['altura'], obj[i]['tiempo'] ]);
+		}
+
 		let pdfDefinition = {
 			content: [
 				{
@@ -200,16 +229,7 @@ export class HomePage {
 				{
 					style: 'tableExample',
 					table: {
-						body: [
-							[
-								{ text: 'Altura', style: 'tableHeader' },
-								{ text: 'Tiempo', style: 'tableHeader' }
-							],
-							[ '7', '0,2' ],
-							[ '7', '0,2' ],
-							[ '7', '0,2' ],
-							[ '7', '0,2' ]
-						]
+						body: array
 					}
 				},
 				// grafica
@@ -263,22 +283,18 @@ export class HomePage {
 
 	openFile() {
 		if (this.platform.is('cordova')) {
-			console.log('es telefono');
-			this.platform.ready().then(() => {
-				this.pdfObjet.getBuffer((buffer) => {
-					var blob = new Blob([ buffer ], { type: 'application/pdf' });
-					this.file
-						.writeFile(this.file.dataDirectory, 'Bitacora.pdf', blob, { replace: true })
-						.then((fileEntry) => {
-							this.fileOpener.open(
-								this.file.dataDirectory + 'Bitacora.pdf',
-								'application/pdf'
-							);
-						});
-				});
-				console.log('es telefono2');
-				return true;
+			this.pdfObjet.getBuffer((buffer) => {
+				var blob = new Blob([ buffer ], { type: 'application/pdf' });
+				this.file
+					.writeFile(this.file.dataDirectory, 'Bitacora.pdf', blob, { replace: true })
+					.then((fileEntry) => {
+						this.fileOpener.open(
+							this.file.dataDirectory + 'Bitacora.pdf',
+							'application/pdf'
+						);
+					});
 			});
+			return true;
 		}
 
 		this.pdfObjet.download();
